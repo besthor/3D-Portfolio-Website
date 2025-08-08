@@ -5,7 +5,13 @@ import { useState } from "react"
 const Header = () => {
   // Toggle the Menu Open/Close
   const [isOpen, setIsOpen] = useState(false);
-  const toggleMenu = () => setIsOpen(!isOpen)
+  const toggleMenu = () => setIsOpen(!isOpen);
+
+  // State to track if the contact form is open
+  const [contactFormOpen, setContactFormOpen] = useState(false);
+
+  const openContactForm = () => setContactFormOpen(true)
+  const closeContactForm = () => setContactFormOpen(false)
 
   return (
     <header className="absolute w-full z-50 transition-all duration-300">
@@ -90,6 +96,7 @@ const Header = () => {
 
           {/* Hire Me Button */}
           <motion.button
+          onClick={openContactForm}
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{
@@ -158,6 +165,71 @@ const Header = () => {
           </button>
         </div>
       </motion.div>
+
+      {/* Contact Form */}
+      {contactFormOpen && (
+        <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0}}
+        transition={{ duration: 0.5 }}
+        className="fixed inset-0 bg-black/50 background-blur-sm z-50 flex items-center justify-center p-4"
+        >
+          <div
+          className="bg-white dark:bg-gray-800 rounded-xl shadow-xl w-full max-w-md p-6">
+
+            <div className="flex justify-between items-center mb-4">
+              <h1 className="text-2xl font-bold text-gray-300">
+              Get In Touch 
+              </h1>
+
+              <button onClick={closeContactForm}>
+                <FiX className="w-5 h-5 text-gray-300 font-extrabold" />
+              </button>
+            </div>
+
+            {/* Input Forms */}
+            <form className="space-y-4">
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-1">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  placeholder="Enter Your Name"
+                  className="w-full px-4 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-violet-500 bg-gray-700"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  placeholder="Your Email"
+                  className="w-full px-4 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-violet-500 bg-gray-700"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-1">
+                  Message
+                </label>
+                <textarea
+                  rows="4"
+                  id="message"
+                  placeholder="How can we help you?"
+                  className="w-full px-4 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-violet-500 bg-gray-700"
+                />
+              </div>
+            </form>
+          </div>
+
+        </motion.div>
+      )}
 
     </header>
   )
